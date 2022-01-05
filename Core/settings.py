@@ -13,13 +13,17 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import os
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-803zdbrrw$m8868r*o3wsvak05ro10*($hq5sw9+hul&82_lcy'
+load_dotenv()
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,7 +90,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'CLIENT': {
-            "host": "mongodb+srv://m001-student:peonzero890@cluster0.yhy8v.mongodb.net/admin?retryWrites=true&w=majority"
+            "host": str(os.getenv('CONNECTION'))
             , "name": "mymovies",
             "authMechanism": "SCRAM-SHA-1"
         }
