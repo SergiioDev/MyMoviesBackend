@@ -1,26 +1,32 @@
 from djongo import models
 from django.utils import timezone
-
-from Movies.models import Movie, MovieForm
+from Movies.models import Movie
 from Users.models import User
+from django import forms
 
 
 class WatchList(models.Model):
     watchlist_name = models.CharField(max_length=100)
     date_created = models.DateField(default=timezone.now)
-    movies = models.ArrayField(
-        model_container=Movie,
-        model_form_class=MovieForm
+    movies = models.ArrayReferenceField(
+        to=Movie, on_delete=models.CASCADE
     )
+
+class WatchListForm(forms.ModelForm):
+    class Meta:
+        model = WatchList
+        fields = (
+            'watchlist_name', 'date_created', 'movies'
+        )
 
 
 class WatchLists(models.Model):
-    user = models.EmbeddedField(
-        model_container=User
+    user = models.ArrayReferenceField(
+        to=User, on_delete=models.CASCADE
     )
-    watchlists = models.ArrayField(
-        model_container=WatchList,
+    watchlists = models.ArrayReferenceField(
+       to=WatchList, on_delete=models.CASCADE
     )
-    watchlists_count = watchlists.auto_creation_counter()
+    watchlists_count = models.IntegerField(default=0)
 
     objects = models.DjongoManager()
