@@ -1,24 +1,24 @@
+from django.core.files.storage import FileSystemStorage
 from djongo import models
 from django import forms
-
-class Genre(models.Model):
-    name = models.CharField(max_length=100)
-
+from django.contrib.postgres.fields import ArrayField
 class Movie(models.Model):
-    movie_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True,default=1)
     title = models.CharField(max_length=500)
-    poster = models.ImageField(upload_to='images/' + str(movie_id) + 'poster/')
-    header = models.ImageField(upload_to='images/' + str(movie_id) + 'header/')
+    poster = models.ImageField(upload_to='images/poster')
+    header = models.ImageField(upload_to='images/header')
     release_date = models.DateField()
     average_rating = models.IntegerField(default=0)
     user_rating = models.IntegerField(default=0)
-    genres = models.ArrayReferenceField(to=Genre, on_delete=models.CASCADE)
+    #genres = ArrayField(models.CharField(max_length=20))
     is_adult = models.BooleanField(default=False)
 
-class MovieForm(forms.ModelForm):
-    class Meta:
-        model = Movie
-        fields = (
-            'movie_id', 'title', 'poster', 'header', 'release_date', 'average_rating', 'user_rating', 'genres',
-            'is_adult'
-        )
+
+#Note: Investigate if we need this
+#class MovieForm(forms.ModelForm):
+#   class Meta:
+#        model = Movie
+#        fields = (
+#            'movie_id', 'title', 'poster', 'header', 'release_date', 'average_rating', 'user_rating', 'genres',
+#            'is_adult'
+#        )
