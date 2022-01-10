@@ -42,13 +42,14 @@ INSTALLED_APPS = [
 
     # Apps
     'Movies',
+    'Users',
+    'PlayLists',
 
     # Third party
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
 
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'Core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+AUTH_USER_MODEL = 'Users.User'
 CORS_ORIGIN_ALLOW_ALL = True
 
 DATABASES = {
@@ -91,12 +92,12 @@ DATABASES = {
         'ENGINE': 'djongo',
         'CLIENT': {
             "host": str(os.getenv('CONNECTION'))
-            , "name": "mymovies",
+            , "name": "seeit_dev",
             "authMechanism": "SCRAM-SHA-1"
         }
     }
-}
 
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
