@@ -62,7 +62,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Core.urls'
-
+BASE_URL = "images"
+UPLOADED_FILES_USE_URL = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

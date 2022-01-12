@@ -1,12 +1,16 @@
 from django.core.files.storage import FileSystemStorage
 from djongo import models
+from django.conf import settings
+from djongo.storage import GridFSStorage
 from django import forms
 from django.contrib.postgres.fields import ArrayField
+
+grid_fs_storage = GridFSStorage(collection='images', base_url=''.join([settings.BASE_URL, 'images/']))
 class Movie(models.Model):
-    id = models.AutoField(primary_key=True,default=1)
+    id = models.BigAutoField(primary_key=True)
     title = models.CharField(max_length=500)
-    poster = models.ImageField(upload_to='images/poster')
-    header = models.ImageField(upload_to='images/header')
+    poster = models.ImageField(upload_to='movies', storage=grid_fs_storage)
+    header = models.ImageField(upload_to='movies', storage=grid_fs_storage)
     release_date = models.DateField()
     average_rating = models.IntegerField(default=0)
     user_rating = models.IntegerField(default=0)
