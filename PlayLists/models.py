@@ -12,6 +12,7 @@ class WatchList(models.Model):
         to=Movie, on_delete=models.CASCADE
     )
 
+
 class WatchListForm(forms.ModelForm):
     class Meta:
         model = WatchList
@@ -25,7 +26,7 @@ class WatchLists(models.Model):
         to=User, on_delete=models.CASCADE
     )
     watchlists = models.ArrayReferenceField(
-       to=WatchList, on_delete=models.CASCADE
+        to=WatchList, on_delete=models.CASCADE
     )
     watchlists_count = models.IntegerField(default=0)
 
